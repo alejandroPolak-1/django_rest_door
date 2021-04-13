@@ -1,0 +1,12 @@
+*.pyc
+*~
+__pycache__
+myvenv
+envDjango
+db.sqlite3
+/static
+.DS_Store
+.vscode
+*.ipynb
+.ipynb_checkpoints
+.idea
