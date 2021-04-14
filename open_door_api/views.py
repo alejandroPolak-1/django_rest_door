@@ -25,6 +25,7 @@ from .serializers import UserProfileSerializers, DoorSerializers
 class UserProfileViewSet(viewsets.ModelViewSet):
     serializer_class = UserProfileSerializers
     queryset         = UserProfile.objects.all()
+    
  
     
 class DoorViewSet(viewsets.ModelViewSet):
