@@ -25,27 +25,34 @@ SECRET_KEY = 'django-insecure-lo^3=zy85^+pp2e-!y6akooyutt!c08t2o%d71&ec0(!e#$gu(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['http://localhost:8000/', '.pythonanywhere.com']
+ALLOWED_HOSTS = ['127.0.0.1:8000', '.pythonanywhere.com']
 # ALLOWED_HOSTS = []
 
 
 # Application definition
 
-INSTALLED_APPS = [
+BASE_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
-    'rest_framework', 
-    'rest_framework.authtoken',
-   
+]
+
+LOCAL_APPS = [
+
     'open_door_api',
     
+]
+
+THIRD_APPS = [
+    'rest_framework', 
+    'rest_framework.authtoken',
     'django_extensions', #PARA JUPYTER
 ]
+
+INSTALLED_APPS = BASE_APPS + LOCAL_APPS + THIRD_APPS
 
 # REST_FRAMEWORK = {
 #     'DEFAULT_AUTHENTICATION_CLASSES': [
