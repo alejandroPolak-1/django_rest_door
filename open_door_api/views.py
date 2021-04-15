@@ -12,7 +12,6 @@ from rest_framework import viewsets
 
 from .models import UserProfile, Door
 from .serializers import UserProfileSerializers, DoorSerializers
-
 # codeh=make_password('1234')
 # print(codeh)
 # print(check_password('1234', codeh))
@@ -22,10 +21,12 @@ from .serializers import UserProfileSerializers, DoorSerializers
 #   
 
 '''CON viewsets'''
-class UserProfileViewSet(viewsets.ModelViewSet):
+
+class UserProfileViewSet(viewsets.ModelViewSet): 
     serializer_class = UserProfileSerializers
     queryset         = UserProfile.objects.all()
     
+ 
  
     
 class DoorViewSet(viewsets.ModelViewSet):

@@ -14,8 +14,6 @@ router = DefaultRouter()
 router.register(r'users', UserProfileViewSet)
 router.register(r'doors', DoorViewSet)
 
-# router.register(r'hello', UserForDoorApiView)
-
 # urlpatterns = router.urls
 
 urlpatterns = [

@@ -4,10 +4,11 @@ from .models import UserProfile, Door
 class UserProfileSerializers(serializers.ModelSerializer):
     class Meta:
         model = UserProfile
-        fields = '__all__' 
+        exclude= ['password']
+        # fields = '__all__' 
         #fields =  ['name', 'email']
         # fields = [ 'email ', 'name', 'dni', 'password'  ]
-        
+  
            
 class DoorSerializers(serializers.ModelSerializer):
     class Meta:
