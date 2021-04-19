@@ -20,6 +20,7 @@ class UserProfileManager(BaseUserManager):
         
         #usuario necesita password
         user.set_password(password)
+
         #guardado en hash
         user.save(using=self._db)
         
@@ -51,9 +52,9 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ['name', 'dni']
 
     # funcion que devuelve string al consultar el nombre
-    def get_full_name(self):
-        '''Obtener nombre completo'''
-        return self.name
+    # def get_full_name(self):
+    #     '''Obtener nombre completo'''
+    #     return self.name
     
     def __str__(self):
         '''Retorna cadena representando nuestro usuario'''
