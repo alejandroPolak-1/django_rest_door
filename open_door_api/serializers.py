@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import UserProfile, Door
 
-from django.contrib.auth.hashers import make_password, check_password
+# from django.contrib.auth.hashers import make_password, check_password
 
 # modelo para crear y actualizar
 class UserProfileSerializers(serializers.ModelSerializer):
@@ -65,7 +65,7 @@ class UsersDoorSerializer(serializers.ModelSerializer):
         
 
 # Serializador de las Puertas    #    
-class DoorSerializers(serializers.ModelSerializer):
+class ListDoorSerializers(serializers.ModelSerializer):
     # users_door = UserProfileSerializers(many = True) # Para trer lso datos del usuario, sin esto solo trae el ID
     # users_door = ListUserSerializers(many = True) # Lo trae con los datos detalladas en este modelo, mas resumido
     users_door = UsersDoorSerializer(many = True) # Lo trae con los datos detalladas en este modelo, mas resumido
@@ -77,7 +77,12 @@ class DoorSerializers(serializers.ModelSerializer):
         fields= '__all__' 
         
      
-  
+class CreateDoorSerializers(serializers.ModelSerializer):
+   
+    class Meta:
+        model = Door
+        # fields = ('id', 'name', 'hash', 'users_door')
+        fields= '__all__'   
     
 
 

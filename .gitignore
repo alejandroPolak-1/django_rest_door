@@ -10,3 +10,4 @@ db.sqlite3
 *.ipynb
 .ipynb_checkpoints
 .idea
+.env
