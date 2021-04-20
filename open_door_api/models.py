@@ -72,9 +72,9 @@ class Door(models.Model):
         '''Obtener puertas'''
         return self.name
     
-    def get_users(self):
+    def set_hash(self):
         '''Obtener puertas'''
-        return self.users_door
+        return self.hash
 
     def __str__(self):
         # return "%s %s" % (self.name, self.users)

@@ -3,9 +3,10 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
+from django.contrib.auth.hashers import make_password, check_password
 
 from .models import UserProfile, Door
-from .serializers import UserProfileSerializers, DoorSerializers
+from .serializers import UserProfileSerializers, DoorSerializers, ListUserSerializers
 
 @api_view(['GET', 'POST'])
 def users_api_view(request):
@@ -13,9 +14,9 @@ def users_api_view(request):
     # List
     if request.method == 'GET':
         # queryset
-        # users            = UserProfile.objects.all().values('name', 'email', 'dni')
+        # users          = UserProfile.objects.all().values('name', 'email', 'password', 'dni')
         users            = UserProfile.objects.all()
-        users_serializer = UserProfileSerializers(users, many= True)
+        users_serializer = ListUserSerializers(users, many= True)
                   
         return Response(users_serializer.data, status = status.HTTP_200_OK)
     
@@ -66,6 +67,9 @@ def doors_for_users_view(request):
         
         doors            = Door.objects.all()
         doors_serializer = DoorSerializers(doors, many= True)
+        # para hashear
+        for i in doors_serializer.data:
+            i['hash'] = make_password(i['hash'])
                 
         return Response(doors_serializer.data, status = status.HTTP_200_OK)
 
@@ -73,26 +77,37 @@ def doors_for_users_view(request):
     # Create
     elif request.method == 'POST':
         door_serializer = DoorSerializers(data = request.data)
+
         # validación
         if door_serializer.is_valid():
             door_serializer.save()
-            return Response(door_serializer.data, status = status.HTTP_201_CREATED)
+            # return Response(door_serializer.data, status = status.HTTP_201_CREATED)
+            return Response({"message": "Door was successfully saved!"}, status = status.HTTP_201_CREATED)
         return Response(door_serializer.errors)
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def door_detail_view(request, pk=None):
     # queryset (consulta)
     door = Door.objects.filter(id = pk).first()
-
+    
+    # hasheo
+    # door.hash= make_password(door.hash)
+    # Para checkear la clave
+    # check_password(clave, clavehashada) _> True
+    
     # validación
     if door: 
         # one user, de
         if request.method == 'GET':
+            # print( check_password('123asd', "pbkdf2_sha256$260000$7lbEzUlEqcL1MhN9tiJfWb$cvZYQbVHEUzJuDZXZlmYmsMfH9KHUy7ZSaytjcRQUdw="))
+            # print( check_password(door.hash, make_password(door.hash))) para chequear
+            door.hash= make_password(door.hash) # hasheo
             door_serializer = DoorSerializers(door)
             return Response(door_serializer.data, status = status.HTTP_200_OK)
         
         # Update
         elif request.method == 'PUT':
+            door.hash= make_password(door.hash) # hasheo
             door_serializer = DoorSerializers(door, request.data)
             if door_serializer.is_valid():
                 door_serializer.save()
@@ -105,3 +120,5 @@ def door_detail_view(request, pk=None):
             return Response({"message": "Door was successfully removed!"}, status = status.HTTP_200_OK)        
     # si no hay usuatio 
     return Response({"message": "No door was found with this data"}, status = status.HTTP_400_BAD_REQUEST)  
+
+    
