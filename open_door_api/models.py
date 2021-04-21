@@ -9,14 +9,14 @@ from django.contrib.auth.hashers import make_password, check_password
 
 class UserProfileManager(BaseUserManager):
     """ Manager for user profile """
-    def create_user(self, email, name, dni, password=None):
+    def create_user(self, username, email, name, lastname, dni, password=None):
         ''' Create a new User Profile'''
         if not email: 
             raise ValueError('You need have an email')
         #convertir en lowerCase
         email = self.normalize_email(email)
 
-        user  =  self.model(email=email, name=name, dni= dni)
+        user  =  self.model(username= username, email=email, name=name, lastname=lastname, dni= dni)
         
         #usuario necesita password
         user.set_password(password)
@@ -26,8 +26,8 @@ class UserProfileManager(BaseUserManager):
         
         return user
     
-    def create_superuser(self, email,name, dni, password):
-        user              = self.create_user(email, name, dni, password)
+    def create_superuser(self, username, email, name, lastname, dni, password):
+        user              = self.create_user(username, email, name, lastname, dni, password)
         
         user.is_superuser = True
         user.is_staff     = True
@@ -37,19 +37,21 @@ class UserProfileManager(BaseUserManager):
 
 class UserProfile(AbstractBaseUser, PermissionsMixin):
     ''' Modelo base de Datos para usuarios en el sistema'''
-    email        = models.EmailField(max_length=255, unique=True)
-    name         = models.CharField(max_length=255)
-    dni          = models.CharField(max_length=20)
-    movil_user   = models.BooleanField(default=False) ##Una vez autenticado la aplicación en el Celular
-    is_active    = models.BooleanField(default=True)
-    is_staff     = models.BooleanField(default=False)
+    username       = models.CharField(max_length=255, unique=True)
+    email          = models.EmailField(max_length=255, unique=True)
+    name           = models.CharField(max_length=255)
+    lastname      = models.CharField(max_length=255)
+    dni            = models.CharField(max_length=30)
+    movil_user     = models.BooleanField(default=False) ##Una vez autenticado la aplicación en el Celular
+    is_active      = models.BooleanField(default=True)
+    is_staff       = models.BooleanField(default=False)
    
     # para manejar modelo de usuario, (para actualizar, borrar y crear usuarios)
     objects = UserProfileManager()
     
     # Campo de Login
     USERNAME_FIELD  = 'email'
-    REQUIRED_FIELDS = ['name', 'dni']
+    REQUIRED_FIELDS = ['username', 'name', 'lastname', 'dni']
 
     # funcion que devuelve string al consultar el nombre
     # def get_full_name(self):
