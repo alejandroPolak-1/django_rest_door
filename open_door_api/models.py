@@ -40,7 +40,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     username       = models.CharField(max_length=255, unique=True)
     email          = models.EmailField(max_length=255, unique=True)
     name           = models.CharField(max_length=255)
-    lastname      = models.CharField(max_length=255)
+    lastname       = models.CharField(max_length=255)
     dni            = models.CharField(max_length=30)
     movil_user     = models.BooleanField(default=False) ##Una vez autenticado la aplicación en el Celular
     is_active      = models.BooleanField(default=True)
@@ -50,8 +50,8 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     objects = UserProfileManager()
     
     # Campo de Login
-    USERNAME_FIELD  = 'email'
-    REQUIRED_FIELDS = ['username', 'name', 'lastname', 'dni']
+    USERNAME_FIELD  = 'username'
+    REQUIRED_FIELDS = ['email' , 'name', 'lastname', 'dni']
 
     # funcion que devuelve string al consultar el nombre
     # def get_full_name(self):
