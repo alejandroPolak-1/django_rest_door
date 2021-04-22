@@ -3,6 +3,15 @@ from .models import UserProfile, Door
 
 # from django.contrib.auth.hashers import make_password, check_password
 
+# Serializador para el token
+class UserTokenSerializer(serializers.ModelSerializer):
+            
+    class Meta:
+        model = UserProfile
+        fields = ('id', 'username', 'email', 'dni')
+
+
+
 # modelo para crear y actualizar
 class UserProfileSerializers(serializers.ModelSerializer):
             
@@ -26,18 +35,6 @@ class UserProfileSerializers(serializers.ModelSerializer):
         updated_user.save() ##este save es del modelo, no del serializador
         return updated_user
     
-    #para Listar porque este serializador usamos para actualizar, por lo tanto no podemos  usar fields = ( 'name', 'email','dni')
-    #  funcion que llama a la autamatizacion y retorna un diccionario clave: valor
-    # def to_representation(self,instance):
-    #     # Puedo cambiar las claves sin cambiar el modelo en base datos
-    #     return {
-    #         'id': instance.id,    #instance['id'], en el caso de usar values en el view, pero trae todo el objeto
-    #         'name': instance.name,
-    #         'email': instance.email,
-    #         'dni': instance.dni,
-    #         'password': instance.password
-    #     }
-
 
 #  PARA LISTAR USUARIOS PERSONALIZADA
 class ListUserSerializers(serializers.ModelSerializer):
@@ -50,8 +47,10 @@ class ListUserSerializers(serializers.ModelSerializer):
         # Puedo cambiar las claves sin cambiar el modelo en base datos
         return {
             'id': instance.id,    #instance['id'], en el caso de usar values en el view, pero trae todo el objeto
-            'name': instance.name,
+            'username': instance.name,
             'email': instance.email,
+            'name': instance.name,
+            'lastname': instance.lastname,
             'dni': instance.dni,
             'password': instance.password
         }
@@ -61,7 +60,7 @@ class UsersDoorSerializer(serializers.ModelSerializer):
             
     class Meta:
         model = UserProfile
-        fields = ('id', 'name', 'email')
+        fields = ('id', 'username', 'email')
         
 
 # Serializador de las Puertas    #    

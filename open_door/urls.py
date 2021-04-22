@@ -1,6 +1,9 @@
 
 from django.contrib import admin
 from django.urls import path, include
+from open_door_api.viewsLoginLogout import Login,Logout
+
+
 
 # from rest_framework.routers import DefaultRouter
 
@@ -21,5 +24,7 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('open_door_api.urlsAPI')),
+    path('logout/', Logout.as_view(), name = 'logout'),
+    path('',Login.as_view(), name = 'login'),
     # url(r'^api/', include('open_door_api.urlsAPI')),
 ]
