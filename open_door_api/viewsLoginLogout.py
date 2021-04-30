@@ -15,6 +15,7 @@ class Login(ObtainAuthToken):
     def post(self,request,*args,**kwargs):
         # send to serializer username and password
         login_serializer = self.serializer_class(data = request.data, context = {'request':request})
+        print(login_serializer)
         if login_serializer.is_valid():
             # login serializer return user in validated_data
             user = login_serializer.validated_data['user'] #es lo que retorna el Correo. 

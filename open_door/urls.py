@@ -23,6 +23,7 @@ from open_door_api.viewsLoginLogout import Login,Logout
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('apimovil/', include('api_movil.urlsAPI')),
     path('api/', include('open_door_api.urlsAPI')),
     path('logout/', Logout.as_view(), name = 'logout'),
     path('',Login.as_view(), name = 'login'),

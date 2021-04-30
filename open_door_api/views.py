@@ -16,7 +16,9 @@ def users_api_view(request):
         # queryset
         # users          = UserProfile.objects.all().values('name', 'email', 'password', 'dni')
         users            = UserProfile.objects.all()
-        users_serializer = ListUserSerializers(users, many= True)
+        # users_serializer = ListUserSerializers(users, many= True)
+        users_serializer = UserProfileSerializers(users, many= True)
+        
                   
         return Response(users_serializer.data, status = status.HTTP_200_OK)
     

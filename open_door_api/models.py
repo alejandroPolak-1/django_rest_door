@@ -50,6 +50,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     objects = UserProfileManager()
     
     # Campo de Login
+    # USERNAME_FIELD  = 'email'
     USERNAME_FIELD  = 'username'
     REQUIRED_FIELDS = ['email' , 'name', 'lastname', 'dni']
 
@@ -73,14 +74,33 @@ class Door(models.Model):
     def get_doors(self):
         '''Obtener puertas'''
         return self.name
-    
-    def set_hash(self):
-        '''Obtener puertas'''
-        return self.hash
 
     def __str__(self):
         # return "%s %s" % (self.name, self.users)
         return "{},{}".format(self.name, self.users_door)
 
 
+# class Personal(models.Model):
+#     id          = models.AutoField(primary_key=True) 
+    # username    = models.CharField(max_length=255, unique=True)
+    # email       = models.EmailField(max_length=255, unique=True)
+    # name        = models.CharField(max_length=255)
+    # lastname    = models.CharField(max_length=255)
+    # dni         = models.CharField(max_length=30)
+    # movil_user  = models.BooleanField(default=False)
+    # hash        = models.CharField(max_length=100)
+    # users_door  = models.ManyToManyField(UserProfile)
+      
+    # # funcion que devuelve string al consultar el nombre
+    # def get_doors(self):
+    #     '''Obtener puertas'''
+    #     return self.name
     
+    # def set_hash(self):
+    #     '''Obtener puertas'''
+    #     return self.hash
+
+    # def __str__(self):
+    #     # return "%s %s" % (self.name, self.users)
+    #     return "{},{}".format(self.name, self.users_door)
+  

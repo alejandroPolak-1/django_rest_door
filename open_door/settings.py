@@ -42,6 +42,7 @@ BASE_APPS = [
 LOCAL_APPS = [
 
     'open_door_api',
+    'api_movil',
     
 ]
 
