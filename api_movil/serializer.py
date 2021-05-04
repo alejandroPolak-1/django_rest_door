@@ -15,7 +15,7 @@ class PersonalSerializer(serializers.ModelSerializer):
 class DoorforPersonalSerializer(serializers.ModelSerializer):
     class Meta:
         model  = Door
-        fields = ("id", "name")
+        fields = ("id", "name", 'ip', 'hash')
 
 # Para implementar el listado adecuado al realizar consulta de usuarios       
 class ListPersonalSerializer(serializers.ModelSerializer):
@@ -45,7 +45,7 @@ class PersonalforDoorSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Personal
-        fields = ("id", "email", "name", "movil_user")
+        fields = ("id", "email", "name", "lastname", "movil_user")
         
 # Para implementar el listado adecuado al realizar consulta d ela puerta        
 class ListDoorSerializer(serializers.ModelSerializer):
@@ -66,16 +66,16 @@ class PersonalByDoorsSerializer(serializers.ModelSerializer):
         model = PersonalByDoors
         fields = '__all__'
         
-#         #  Para Listar puerta en el detalle de cada usuario
-# class DoorbyPersonalSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model  = Door
-#         fields = ("id", "name", 'hash')
+        #  Para Listar puerta en el detalle de cada usuario
+class DoorbyPersonalSerializer(serializers.ModelSerializer):
+    class Meta:
+        model  = Door
+        fields = ("id", "name", "ip", 'hash')
 
-# class ListPersonalByDoorsSerializer(serializers.ModelSerializer):
-#     door     = DoorbyPersonalSerializer()
-#     personal = PersonalforDoorSerializer()
+class ListPersonalByDoorsSerializer(serializers.ModelSerializer):
+    door     = DoorbyPersonalSerializer()
+    personal = PersonalforDoorSerializer()
 
-#     class Meta:
-#         model    = PersonalByDoors
-#         fields   = '__all__'
+    class Meta:
+        model    = PersonalByDoors
+        fields   = '__all__'
