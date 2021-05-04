@@ -7,7 +7,7 @@ from rest_framework.decorators import api_view
 from django.contrib.auth.hashers import make_password, check_password
 
 from .models import Personal, Door, PersonalByDoors
-from .serializer import PersonalSerializer, DoorSerializer, PersonalByDoorsSerializer
+from .serializer import PersonalSerializer, DoorSerializer, PersonalByDoorsSerializer, ListDoorSerializer, ListPersonalSerializer
 
 '''
 PERSONAL
@@ -18,7 +18,7 @@ def personal_api_view(request):
         
     if request.method == 'GET':
         personal            = Personal.objects.all()
-        personal_serializer = PersonalSerializer(personal, many= True)
+        personal_serializer = ListPersonalSerializer(personal, many= True)
         return Response(personal_serializer.data, status = status.HTTP_200_OK)
     
         
@@ -40,7 +40,7 @@ def personal_detail_api_view(request, pk=None):
     if personal: 
         # one personal, de
         if request.method == 'GET':
-            personal_serializer = PersonalSerializer(personal)
+            personal_serializer = ListPersonalSerializer(personal)
             return Response(personal_serializer.data, status = status.HTTP_200_OK)
         
         # Update
@@ -69,7 +69,7 @@ def door_api_view(request):
         
     if request.method == 'GET':
         door            = Door.objects.all()
-        door_serializer = DoorSerializer(door, many= True)
+        door_serializer = ListDoorSerializer(door, many= True)
         
         for i in door_serializer.data:
             i['hash'] = make_password(i['hash'])
@@ -95,7 +95,7 @@ def door_detail_api_view(request, pk=None):
     if door: 
         # one door, de
         if request.method == 'GET':
-            door_serializer = DoorSerializer(door)
+            door_serializer = ListDoorSerializer(door)
             door.hash= make_password(door.hash) # hasheo
 
             return Response(door_serializer.data, status = status.HTTP_200_OK)
